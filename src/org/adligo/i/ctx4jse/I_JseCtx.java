@@ -3,14 +3,18 @@ package org.adligo.i.ctx4jse;
 import org.adligo.i.ctx.shared.I_Ctx;
 
 /**
+ * This is a Contextual interface for Java Standard Edition stuff, which like
+ * all of Adligp's Context (abbreviated Ctx) facilitate the Context Creation and
+ * Contextualitan design patterns.  These patterns allow stubbing with tools like;
+ * {@link <a href="https://github.com/adligo/mockito_ext.adligo.org">mockito_ext.adligo.org</a>}<br/><br/>
  * This overloads the methods in I_Ctx using 
  * Java Classes instead of Strings, since plain old Javascript
  * will not have the concept of Java Classes.   The methods in this
- * interface SHOULD generally be used instead of the methods I_Ctx.
+ * interface SHOULD generally be used instead of the methods I_Ctx. <br/><br/>
  * 
  * @see {@link I_Ctx}
- * @author scott
- *
+ * @author scott<br/><br/>
+ * <pre><code>
  *  ---------------- Apache ICENSE-2.0 --------------------------
  *
  * Copyright 2022 Adligo Inc
@@ -26,6 +30,7 @@ import org.adligo.i.ctx.shared.I_Ctx;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ * </code></pre>
  */
 public interface I_JseCtx extends I_Ctx {
 
@@ -65,4 +70,9 @@ public interface I_JseCtx extends I_Ctx {
    * @see {@link I_Ctx#get(String)}
    */
   public <T> T get(Class<T> clazz);
+  
+  @Override
+  default long getTime() {
+    return System.currentTimeMillis();
+  }
 }
