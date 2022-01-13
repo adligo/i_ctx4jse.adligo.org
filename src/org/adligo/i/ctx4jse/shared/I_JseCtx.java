@@ -1,4 +1,4 @@
-package org.adligo.i.ctx4jse;
+package org.adligo.i.ctx4jse.shared;
 
 import org.adligo.i.ctx.shared.I_Ctx;
 
