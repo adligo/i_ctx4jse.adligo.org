@@ -12,6 +12,16 @@ plugins {
   signing
 }
 
+//https://docs.gradle.org/current/userguide/migrating_from_groovy_to_kotlin_dsl.html
+//https://stackoverflow.com/questions/24724383/add-resources-config-files-to-your-jar-using-gradle
+tasks.jar {
+  println("in GWT jar with " + this);
+  from("src") {
+    include("**/*.xml")
+    include("**/*.java")
+  }
+}
+
 sourceSets {
   main {
     java {
