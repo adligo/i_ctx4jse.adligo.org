@@ -1,15 +1,12 @@
 package org.adligo.i.ctx4jse.shared;
 
-import java.util.Objects;
+import java.util.Collection;
+import java.util.Map;
 
 /**
- * This mixin provides Tests4j like assertion methods, which throw
- * {@link IllegalArgumentException}s.  Implementing (really extending this mixin) 
- * are NOT intended to be used in a testing framework, but instead intended
- * to provide Secure Code style assertions about parameters this follows
- * the {@link Objects#requireNonNull(Object)} method pattern.  However
- * this class (yep it's compiled into a bytecode .class file :) ) 
- * reduces the necessary typing by using the mixin style.<br/>
+ * This class provides Tests4j like assertion methods, which throw
+ * {@link IllegalArgumentException}s.  You may use this in the public static way, 
+ * however the I_Check interface allows you to mixin these methods. <br/>
  *   Also note that String.format is NOT used to to some incompatibility issues
  * with some tools that this code is designed to work with.
  * @author scott
@@ -31,7 +28,7 @@ import java.util.Objects;
  * limitations under the License.
  * </code></pre>
  */
-public interface Check {
+public class Check {
 
   public static final String ACTUAL_START_LINE = "\tactual: '";
   public static final String ACTUAL_NULL_LINE = "\tactual: null \n";
@@ -39,28 +36,131 @@ public interface Check {
   public static final String EXPECTED_NULL_LINE = "\texpected: null \n";
   public static final String FALSE_IS_REQUIRED = "False is required at this point.\n";
   public static final String NEW_LINE = "\n";
+  
   public static final String THE_ACTUAL_IS_EMPTY = "The actual is empty.";
   public static final String THE_ACTUAL_IS_NOT_EQUAL_TO_THE_EXPECTED = "The actual is NOT equal to the expected;\n";
   public static final String THE_ACTUAL_IS_NULL = "The actual is null.";
   public static final String THE_ACTUAL_MUST_NOT_EQUAL_EXPECTED = "The actual MUST NOT equal the expected value;\n";
   public static final String THE_ACTUAL_MUST_BE_THE_SAME_AS_EXPECTED = "The actual MUST NOT be the same as the expected value;\n";
-  
+  public static final String THE_COLLECTION_MUST_CONTAIN = "The Collection MUST contain;\n";
+  public static final String THE_MAP_MUST_CONTAIN_KEY = "The Map MUST contain key;\n";
+  public static final String THE_MAP_MUST_CONTAIN_VALUE = "The Map MUST contain value;\n";
+
+  public static final String THE_COLLECTION_MUST_NOT_CONTAIN = "The Collection MUST NOT contain;\n";
+  public static final String THE_MAP_MUST_NOT_CONTAIN_KEY = "The Map MUST NOT contain key;\n";
+  public static final String THE_MAP_MUST_NOT_CONTAIN_VALUE = "The Map MUST NOT contain value;\n";
   public static final String TRUE_IS_REQUIRED = "True is required at this point.\n";
   
   public static final String QUOTE_NEW_LINE = "'\n";
   
-  static String assembleActualLine(Object actual) {
+  public static String assembleActualLine(Object actual) {
     if (actual == null) {
       return ACTUAL_NULL_LINE;
     }
     return ACTUAL_START_LINE + actual + QUOTE_NEW_LINE;
   }
 
-  static String assembleExpectedLine(Object expected) {
+  public static String assembleExpectedLine(Object expected) {
     if (expected == null) {
       return EXPECTED_NULL_LINE;
     }
     return EXPECTED_START_LINE + expected + QUOTE_NEW_LINE;
+  }
+
+  /**
+   * This method asserts that the actual parameter is contained
+   * in the collection.
+   * 
+   * @param collection
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <O> O contains(Collection<O> collection, O actual) {
+    if (collection.contains(actual)) {
+      return actual;
+    }
+    throw new IllegalArgumentException(THE_COLLECTION_MUST_CONTAIN +
+        assembleActualLine(actual));
+  }
+
+  /**
+   * This method asserts that the actual parameter is contained
+   * in the collection.
+   * @param message the failure message
+   * @param collection
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <O> O contains(String message, Collection<O> collection, O actual) {
+    if (collection.contains(actual)) {
+      return actual;
+    }
+    throw new IllegalArgumentException(message + NEW_LINE +
+        assembleActualLine(actual));
+  }
+
+  /**
+   * This method asserts that the actual parameter is contained
+   * in the map.
+   * 
+   * @param map
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <O,V> O containsKey(Map<O,V> map, O actual) {
+    if (map.containsKey(actual)) {
+      return actual;
+    }
+    throw new IllegalArgumentException(THE_MAP_MUST_CONTAIN_KEY +
+        assembleActualLine(actual));
+  }
+
+  /**
+   * This method asserts that the actual parameter is contained
+   * in the map as a key.
+   * @param message the failure message
+   * @param map
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <O,V> O containsKey(String message, Map<O,V> map, O actual) {
+    if (map.containsKey(actual)) {
+      return actual;
+    }
+    throw new IllegalArgumentException(message + NEW_LINE +
+        assembleActualLine(actual));
+  }
+
+  /**
+   * This method asserts that the actual parameter is contained
+   * in the map.
+   * 
+   * @param map
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <K, O> O containsValue(Map<K,O> map, O actual) {
+    if (map.containsValue(actual)) {
+      return actual;
+    }
+    throw new IllegalArgumentException(THE_MAP_MUST_CONTAIN_VALUE +
+        assembleActualLine(actual));
+  }
+
+  /**
+   * This method asserts that the actual parameter is contained
+   * in the map as a key.
+   * @param message the failure message
+   * @param map
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <K, O> O containsValue(String message, Map<K,O> map, O actual) {
+    if (map.containsValue(actual)) {
+      return actual;
+    }
+    throw new IllegalArgumentException(message + NEW_LINE +
+        assembleActualLine(actual));
   }
   
   /**
@@ -68,7 +168,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object equals(Object expected, Object actual) {
+  public static <O> O equals(Object expected, O actual) {
     //throw NPE on expected intentionally
     if (expected.equals(actual)) {
       return actual;
@@ -84,7 +184,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object equals(String message, Object expected, Object actual) {
+  public static <O> O equals(String message, Object expected, O actual) {
     //throw NPE on expected intentionally
     if (expected.equals(actual)) {
       return actual;
@@ -98,7 +198,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object equals(String expected, String actual){
+  public static String equals(String expected, String actual){
     //throw NPE on expected intentionally
     if (expected.equals(actual)) {
       return actual;
@@ -113,7 +213,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object equals(String message, String expected, String actual){
+  public static String equals(String message, String expected, String actual){
     //throw NPE on expected intentionally
     if (expected.equals(actual)) {
       return actual;
@@ -122,14 +222,14 @@ public interface Check {
         assembleActualLine(actual) + assembleExpectedLine(expected));
   }
 
-  static void isFalse(boolean actual){
+  public static void isFalse(boolean actual){
     if (actual) {
       throw new IllegalArgumentException(FALSE_IS_REQUIRED);
     }
     return;
   }
 
-  static void isFalse(String message, boolean actual){
+  public static void isFalse(String message, boolean actual){
     if (actual) {
       throw new IllegalArgumentException(message);
     }
@@ -137,11 +237,107 @@ public interface Check {
   }
 
   /**
+   * This method asserts that the actual parameter is NOT contained
+   * in the collection.
+   * 
+   * @param collection
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <O> O notContains(Collection<O> collection, O actual) {
+    if (collection.contains(actual)) {
+      throw new IllegalArgumentException(THE_COLLECTION_MUST_NOT_CONTAIN +
+          assembleActualLine(actual));
+    }
+    return actual;
+  }
+
+  /**
+   * This method asserts that the actual parameter is NOT contained
+   * in the collection.
+   * @param message the failure message
+   * @param collection
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <O> O notContains(String message, Collection<O> collection, O actual) {
+    if (collection.contains(actual)) {
+      throw new IllegalArgumentException(message + NEW_LINE +
+          assembleActualLine(actual));
+    }
+    return actual;
+  }
+
+  /**
+   * This method asserts that the actual parameter is NOT contained
+   * in the map.
+   * 
+   * @param map
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <O,V> O notContainsKey(Map<O,V> map, O actual) {
+    if (map.containsKey(actual)) {
+      throw new IllegalArgumentException(THE_MAP_MUST_NOT_CONTAIN_KEY +
+          assembleActualLine(actual));
+    }
+    return actual;
+  }
+
+  /**
+   * This method asserts that the actual parameter is NOT contained
+   * in the map as a key.
+   * @param message the failure message
+   * @param map
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <O,V> O notContainsKey(String message, Map<O,V> map, O actual) {
+    if (map.containsKey(actual)) {
+      throw new IllegalArgumentException(message + NEW_LINE +
+          assembleActualLine(actual));
+    }
+    return actual;
+  }
+
+  /**
+   * This method asserts that the actual parameter is NOT contained
+   * in the map.
+   * 
+   * @param map
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <K, O> O notContainsValue(Map<K,O> map, O actual) {
+    if (map.containsValue(actual)) {
+      throw new IllegalArgumentException(THE_MAP_MUST_NOT_CONTAIN_VALUE +
+          assembleActualLine(actual));
+    }
+    return actual;
+  }
+
+  /**
+   * This method asserts that the actual parameter is NOT contained
+   * in the map as a key.
+   * @param message the failure message
+   * @param map
+   * @param actual
+   * @return the actual parameter
+   */
+  public static <K, O> O notContainsValue(String message, Map<K,O> map, O actual) {
+    if (map.containsValue(actual)) {
+      throw new IllegalArgumentException(message + NEW_LINE +
+          assembleActualLine(actual));
+    }
+    return actual;
+  }
+
+  /**
    * 
    * @param actual
    * @return the actual parameter
    */
-  static String notEmpty(String actual){
+  public static String notEmpty(String actual){
     if (actual == null) {
       throw new IllegalArgumentException(THE_ACTUAL_IS_NULL);
     }
@@ -157,7 +353,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object notEmpty(String message, String actual){
+  public static String notEmpty(String message, String actual){
     if (actual == null) {
       throw new IllegalArgumentException(message);
     }
@@ -172,7 +368,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object notNull(Object actual){
+  public static <O> O  notNull(O actual){
     if (actual == null) {
       throw new IllegalArgumentException(THE_ACTUAL_IS_NULL);
     }
@@ -185,7 +381,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object notNull(String message, Object actual){
+  public static <O> O notNull(String message, O actual){
     if (actual == null) {
       throw new IllegalArgumentException(message);
     }
@@ -198,7 +394,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object notEquals(Object expected, Object actual){
+  public static <O> O notEquals(Object expected, O actual){
     //throw NPE on expected intentionally
     if (expected.equals(actual)) {
       throw new IllegalArgumentException(THE_ACTUAL_MUST_NOT_EQUAL_EXPECTED +
@@ -214,7 +410,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object notEquals(String message, Object expected, Object actual) {
+  public static <O> O notEquals(String message, Object expected, O actual) {
     //throw NPE on expected intentionally
     if (expected.equals(actual)) {
       throw new IllegalArgumentException(message +
@@ -229,7 +425,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object notEquals(String expected, String actual) {
+  public static String notEquals(String expected, String actual) {
     //throw NPE on expected intentionally
     if (expected.equals(actual)) {
       throw new IllegalArgumentException(THE_ACTUAL_MUST_NOT_EQUAL_EXPECTED +
@@ -245,7 +441,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object notEquals(String message, String expected, String actual) {
+  public static String notEquals(String message, String expected, String actual) {
     //throw NPE on expected intentionally
     if (expected.equals(actual)) {
       throw new IllegalArgumentException(message +
@@ -260,7 +456,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object notSame(Object expected, Object actual) {
+  public static <O> O  notSame(Object expected, O actual) {
     //throw NPE on expected intentionally
     if (expected == actual) {
       throw new IllegalArgumentException(THE_ACTUAL_MUST_BE_THE_SAME_AS_EXPECTED +
@@ -275,7 +471,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object notSame(String message, Object expected, Object actual) {
+  public static <O> O notSame(String message, Object expected, O actual) {
     //throw NPE on expected intentionally
     if (expected == actual) {
       throw new IllegalArgumentException(message +
@@ -289,7 +485,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object same(Object expected, Object actual) {
+  public static <O> O same(Object expected, O actual) {
     //throw NPE on expected intentionally
     if (expected == actual) {
       return actual;
@@ -304,7 +500,7 @@ public interface Check {
    * @param actual
    * @return the actual parameter
    */
-  static Object same(String message, Object expected, Object actual) {
+  public static <O> O same(String message, Object expected, O actual) {
     //throw NPE on expected intentionally
     if (expected == actual) {
       return actual;
@@ -313,14 +509,14 @@ public interface Check {
         assembleActualLine(actual) + assembleExpectedLine(expected));
   }
 
-  static void isTrue(boolean actual) {
+  public static void isTrue(boolean actual) {
     if (actual) {
       return;
     }
     throw new IllegalArgumentException(TRUE_IS_REQUIRED);
   }
 
-  static void isTrue(String message, boolean actual) {
+  public static void isTrue(String message, boolean actual) {
     if (actual) {
       return;
     }
