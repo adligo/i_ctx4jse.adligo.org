@@ -19,8 +19,7 @@ import org.adligo.i.ctx.shared.I_Ctx;
  * @author scott<br/>
  *         <br/>
  * 
- *         <pre>
- * <code>
+ * <pre><code>
  *  ---------------- Apache ICENSE-2.0 --------------------------
  *
  * Copyright 2022 Adligo Inc
@@ -36,8 +35,7 @@ import org.adligo.i.ctx.shared.I_Ctx;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * </code>
- *         </pre>
+ * </code></pre>
  */
 public interface I_JseCtx extends I_Ctx {
 
