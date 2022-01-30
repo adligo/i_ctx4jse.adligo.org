@@ -1,6 +1,11 @@
+package org.adligo.i_ctx4jse.shared;
+
+import org.adligo.i_ctx.shared.I_CtxAware;
 
 /**
- * This export's the Java Module for this project.<br/>
+ * This interfaces marks a class or other interface as having a constructor
+ * with a single {@link I_JseCtx} argument.  Note that the leaf most context
+ * will be passed to the constructor.
  * <br/>
  * 
  * @author scott<br/>
@@ -24,6 +29,11 @@
  * limitations under the License.
  * </code><pre>
  */
-module org.adligo.i.ctx4jse {
-  requires transitive org.adligo.i.ctx;
+public interface I_JseCtxAware extends I_CtxAware {
+
+  /**
+   * return the context
+   * @return
+   */
+  public I_JseCtx getCtx();
 }

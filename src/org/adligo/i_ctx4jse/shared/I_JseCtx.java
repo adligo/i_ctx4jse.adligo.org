@@ -1,6 +1,6 @@
-package org.adligo.i.ctx4jse.shared;
+package org.adligo.i_ctx4jse.shared;
 
-import org.adligo.i.ctx.shared.I_Ctx;
+import org.adligo.i_ctx.shared.I_Ctx;
 
 /**
  * This is a Contextual interface for Java Standard Edition stuff, which like

@@ -1,8 +1,8 @@
-package org.adligo.i.ctx4jse.shared;
+package org.adligo.i_ctx4jse.shared;
 
 import java.io.PrintStream;
 
-import org.adligo.i.ctx.shared.I_Ctx;
+import org.adligo.i_ctx.shared.I_Ctx;
 
 /**
  * This extends the I_JseCtx with print methods that wrap the System's
