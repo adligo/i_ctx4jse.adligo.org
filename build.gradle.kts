@@ -62,7 +62,7 @@ fun getTag(): String {
 publishing {
   publications {
     create<MavenPublication>("maven") {
-      groupId = "org.adligo.jse6-core"
+      groupId = "org.adligo.jse7-core"
       artifactId = "i_ctx4jse"
       version = getTag()
       from(components["java"])
