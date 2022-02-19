@@ -2,21 +2,10 @@ package org.adligo.i_ctx4jse.shared;
 
 import java.io.PrintStream;
 
-import org.adligo.i_ctx.shared.I_Ctx;
-
 /**
- * This extends the I_JseCtx with print methods that wrap the System's
- * {@link PrintStream#println(Object)} and {@link PrintStream#print(Object)}
- * methods. Like all of Adligp's Context (abbreviated Ctx) facilitate the
- * Context Creation and Contextualitan design patterns. These patterns allow
- * stubbing with tools like; {@link <a href=
- * "https://github.com/adligo/mockito_ext.adligo.org">mockito_ext.adligo.org</a>}<br/>
- * <br/>
- * Note this is intentionally broken away from the I_JseCtx so that some systems
- * MAY intentionally discourage the use of these print and println methods.<br/>
- * <br/>
+ * This mixin provides a println method wrapper to your class or interface,
+ * no more Syste.out.println yea!
  * 
- * @see {@link I_Ctx}
  * @author scott<br/>
  * 
  *         <pre>
