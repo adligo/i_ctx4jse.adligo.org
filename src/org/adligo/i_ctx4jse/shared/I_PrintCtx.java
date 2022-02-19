@@ -40,58 +40,8 @@ import org.adligo.i_ctx.shared.I_Ctx;
  *         </pre>
  */
 
-public interface I_PrintCtx extends I_JseCtx {
+public interface I_PrintCtx extends I_JseCtx, I_PrintMixin {
 
-  /**
-   * This wraps the {@link} System}'s {@link PrintStream#print(Object)} so that it
-   * can be easily stubbed with tools like; {@link <a href=
-   * "https://github.com/adligo/mockito_ext.adligo.org">mockito_ext.adligo.org</a>}
-   * 
-   * @param message
-   * @return
-   */
-  default I_PrintCtx print(Object message) {
-    System.out.println(message);
-    return this;
-  }
 
-  /**
-   * This wraps the {@link} System}'s {@link PrintStream#print(String)} so that it
-   * can be easily stubbed with tools like; {@link <a href=
-   * "https://github.com/adligo/mockito_ext.adligo.org">mockito_ext.adligo.org</a>}
-   * 
-   * @param message
-   * @return
-   */
-  default I_PrintCtx print(String message) {
-    System.out.println(message);
-    return this;
-  }
-
-  /**
-   * This wraps the {@link} System}'s {@link PrintStream#println(Object)} so that
-   * it can be easily stubbed with tools like; {@link <a href=
-   * "https://github.com/adligo/mockito_ext.adligo.org">mockito_ext.adligo.org</a>}
-   * 
-   * @param message
-   * @return
-   */
-  default I_PrintCtx println(Object message) {
-    System.out.println(message);
-    return this;
-  }
-
-  /**
-   * This wraps the {@link} System}'s {@link PrintStream#println(String)} so that
-   * it can be easily stubbed with tools like; {@link <a href=
-   * "https://github.com/adligo/mockito_ext.adligo.org">mockito_ext.adligo.org</a>}
-   * 
-   * @param message
-   * @return
-   */
-  default I_PrintCtx println(String message) {
-    System.out.println(message);
-    return this;
-  }
 
 }
