@@ -4,6 +4,10 @@ bin
 build
 gradle
 .gradle
+# Also in Eclipse GitStaging Assume Unchanged
+.project
+build
+build/
 
 # Log file
 *.log
